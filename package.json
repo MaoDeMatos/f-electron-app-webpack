@@ -1,15 +1,13 @@
 {
   "name": "f-electron-app-webpack",
   "productName": "f-electron-app-webpack",
+  "description": "Electron app webpack",
   "version": "1.0.0",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
-    "package": "electron-forge package",
     "make": "electron-forge make",
-    "make-windows": "electron-forge make --platform win32",
-    "make-linux": "electron-forge make --platform linux",
-    "make-mac": "electron-forge make --platform darwin",
+    "package": "electron-forge package",
     "publish": "electron-forge publish",
     "lint": "echo \"No linting configured\"",
     "test": "jest"

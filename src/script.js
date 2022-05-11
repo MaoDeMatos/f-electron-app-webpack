@@ -18,7 +18,6 @@ window.onload = () => {
     const inputValue = parseInt(e.target[0].value);
     e.target[0].value = null;
 
-    steps++;
     let won = false;
 
     if (!inputValue) return;
@@ -27,6 +26,8 @@ window.onload = () => {
       won = true;
     } else if (inputValue > numberToFind) yourInputWasGreater();
     else if (inputValue < numberToFind) yourInputWasSmaller();
+
+    steps++;
 
     if (!alreadyTriedHeaderHtmlElement.innerHTML)
       alreadyTriedHeaderHtmlElement.innerHTML = "Already tried :";

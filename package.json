@@ -1,6 +1,7 @@
 {
   "name": "f-electron-app-webpack",
   "productName": "f-electron-app-webpack",
+  "description": "Electron app webpack",
   "version": "1.0.0",
   "main": ".webpack/main",
   "scripts": {

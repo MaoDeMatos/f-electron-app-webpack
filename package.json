@@ -9,7 +9,8 @@
     "make": "electron-forge make",
     "package": "electron-forge package",
     "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\""
+    "lint": "echo \"No linting configured\"",
+    "test": "jest"
   },
   "keywords": [],
   "author": {
@@ -72,6 +73,7 @@
     "@vercel/webpack-asset-relocator-loader": "1.7.0",
     "css-loader": "^6.0.0",
     "electron": "18.2.0",
+    "jest": "^28.1.0",
     "node-loader": "^2.0.0",
     "style-loader": "^3.0.0"
   },

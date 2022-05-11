@@ -6,7 +6,9 @@
   </head>
   <body>
     <div id="page">
-      <button id="reset-button">Réinitialiser</button>
+      <h1>Guess the number</h1>
+
+      <button id="reset-button">Reset</button>
 
       <form id="number-form" method="post" action="">
         <input
@@ -17,13 +19,14 @@
           max="50"
           placeholder="Enter a number here"
         />
-        <button type="submit">Valider</button>
+
+        <button type="submit">Validate</button>
       </form>
 
       <p id="message"></p>
 
       <div>
-        <p>Nombres essayés :</p>
+        <p id="already-tried-header"></p>
         <ul id="already-tried"></ul>
       </div>
     </div>

@@ -3,6 +3,9 @@ window.onload = () => {
 
   // const numberToFindHtmlElement = document.getElementById("numberToFind");
   const numberInputHtmlElement = document.getElementById("number-input");
+  const alreadyTriedHeaderHtmlElement = document.getElementById(
+    "already-tried-header"
+  );
   const alreadyTriedHtmlElement = document.getElementById("already-tried");
   const messageHtmlElement = document.getElementById("message");
 
@@ -15,6 +18,7 @@ window.onload = () => {
     const inputValue = parseInt(e.target[0].value);
     e.target[0].value = null;
 
+    steps++;
     let won = false;
 
     if (!inputValue) return;
@@ -24,40 +28,44 @@ window.onload = () => {
     } else if (inputValue > numberToFind) yourInputWasGreater();
     else if (inputValue < numberToFind) yourInputWasSmaller();
 
+    if (!alreadyTriedHeaderHtmlElement.innerHTML)
+      alreadyTriedHeaderHtmlElement.innerHTML = "Already tried :";
+
     const li = document.createElement("li");
     li.innerHTML = inputValue;
     alreadyTriedHtmlElement.appendChild(li);
 
-    // TO FIX
-    if (steps >= 3 && !won) youLost(inputValue);
-    else steps++;
+    if (steps > 4 && !won) {
+      youLost();
+    }
   };
 
   function youWon() {
-    messageHtmlElement.innerHTML = "Gagné !";
+    messageHtmlElement.innerHTML = "You won !";
     numberInputHtmlElement.setAttribute("disabled", "");
   }
 
   function yourInputWasGreater() {
-    messageHtmlElement.innerHTML = "C'est moins !";
+    messageHtmlElement.innerHTML = "It's less !";
   }
 
   function yourInputWasSmaller() {
-    messageHtmlElement.innerHTML = "C'est plus !";
+    messageHtmlElement.innerHTML = "It's more !";
   }
 
-  function youLost(num) {
-    messageHtmlElement.innerHTML = "Perdu ! Le nombre à trouver était : " + num;
+  function youLost() {
+    messageHtmlElement.innerHTML =
+      "You lost ! The number was : " + numberToFind;
+    numberInputHtmlElement.setAttribute("disabled", "");
   }
 
   function initGuessTheNumber() {
     steps = 0;
     numberToFind = getRandomNumInRange(0, 50);
-    console.log(numberToFind);
 
     numberInputHtmlElement.removeAttribute("disabled");
-    // alreadyTriedHtmlElement.removeChild;
     messageHtmlElement.innerHTML = "";
+    alreadyTriedHeaderHtmlElement.innerHTML = "";
     alreadyTriedHtmlElement.innerHTML = "";
   }
 

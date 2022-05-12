@@ -96,3 +96,16 @@ function initGuessTheNumber() {
 function getRandomNumInRange(min, max) {
   return Math.ceil(Math.random() * (max - min) + min);
 }
+
+// "export default subtract;" is from ES6 specification,
+// we need to use Node CommonJS module system :
+if (typeof exports !== "undefined") {
+  module.exports = {
+    youWon,
+    youLost,
+    yourInputWasGreater,
+    yourInputWasSmaller,
+    valueNotInRange,
+    initGuessTheNumber,
+  };
+}

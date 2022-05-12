@@ -1,4 +1,6 @@
-let steps, numberToFind;
+let steps,
+  numberToFind,
+  won = false;
 
 const numberInputHtmlElement = document.getElementById("number-input");
 const alreadyTriedHeaderHtmlElement = document.getElementById(
@@ -26,65 +28,57 @@ function handleSubmit(e) {
   const inputValue = parseInt(e.target[0].value);
   e.target[0].value = null;
 
-  let won = false;
-
-  if (!inputValue) {
-    messageHtmlElement.innerHTML = "";
-    return;
-  } else if (inputValue > 50 || inputValue < 0) {
-    valueNotInRange();
-    return;
-  } else if (inputValue === numberToFind) {
-    youWon();
-    won = true;
-  } else if (inputValue > numberToFind) yourInputWasGreater();
-  else if (inputValue < numberToFind) yourInputWasSmaller();
+  if (checkValue(inputValue) === false) return;
 
   steps++;
 
-  if (!alreadyTriedHeaderHtmlElement.innerHTML)
-    alreadyTriedHeaderHtmlElement.innerHTML = "Already tried :";
+  if (!alreadyTriedHeaderHtmlElement.innerText)
+    alreadyTriedHeaderHtmlElement.innerText = "Already tried :";
 
   const li = document.createElement("li");
-  li.innerHTML = inputValue;
+  li.innerText = inputValue;
   alreadyTriedHtmlElement.appendChild(li);
 
   if (steps > 4 && !won) {
-    youLost();
+    messageHtmlElement.innerText =
+      "You lost ! The number was : " + numberToFind;
+    numberInputHtmlElement.setAttribute("disabled", "");
   }
 }
 
-function youWon() {
-  messageHtmlElement.innerHTML = "You won !";
-  numberInputHtmlElement.setAttribute("disabled", "");
-}
-
-function yourInputWasGreater() {
-  messageHtmlElement.innerHTML = "It's less !";
-}
-
-function yourInputWasSmaller() {
-  messageHtmlElement.innerHTML = "It's more !";
-}
-
-function youLost() {
-  messageHtmlElement.innerHTML = "You lost ! The number was : " + numberToFind;
-  numberInputHtmlElement.setAttribute("disabled", "");
-}
-
-function valueNotInRange() {
-  messageHtmlElement.innerHTML =
-    "The number must be between 0 and 50 (included).";
+function checkValue(val) {
+  if (!val) {
+    messageHtmlElement.innerText = "";
+    return false;
+  } else if (val > 50 || val < 0) {
+    messageHtmlElement.innerText =
+      "The number must be between 0 and 50 (included).";
+    return false;
+  } else if (val === numberToFind) {
+    messageHtmlElement.innerText = "You won !";
+    numberInputHtmlElement.setAttribute("disabled", "");
+    won = true;
+  } else if (val > numberToFind) messageHtmlElement.innerText = "It's less !";
+  else if (val < numberToFind) messageHtmlElement.innerText = "It's more !";
 }
 
 function initGuessTheNumber() {
   steps = 0;
-  numberToFind = getRandomNumInRange(0, 50);
+  won = false;
+  setNumberToFind(getRandomNumInRange(0, 50));
 
   numberInputHtmlElement.removeAttribute("disabled");
   messageHtmlElement.innerHTML = "";
   alreadyTriedHeaderHtmlElement.innerHTML = "";
   alreadyTriedHtmlElement.innerHTML = "";
+}
+
+function setNumberToFind(num) {
+  numberToFind = num;
+}
+
+function getNumberToFind() {
+  return numberToFind;
 }
 
 /**
@@ -93,19 +87,19 @@ function initGuessTheNumber() {
  * @param {number} max Max value
  * @returns
  */
-function getRandomNumInRange(min, max) {
+function getRandomNumInRange(min = 0, max = 50) {
   return Math.ceil(Math.random() * (max - min) + min);
 }
 
-// "export default subtract;" is from ES6 specification,
+// "export function;" is from ES6 specification,
 // we need to use Node CommonJS module system :
 if (typeof exports !== "undefined") {
   module.exports = {
-    youWon,
-    youLost,
-    yourInputWasGreater,
-    yourInputWasSmaller,
-    valueNotInRange,
+    setNumberToFind,
+    getNumberToFind,
+    messageHtmlElement,
+    checkValue,
     initGuessTheNumber,
+    getRandomNumInRange,
   };
 }

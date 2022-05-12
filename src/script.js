@@ -8,6 +8,7 @@ const alreadyTriedHeaderHtmlElement = document.getElementById(
 );
 const alreadyTriedHtmlElement = document.getElementById("already-tried");
 const messageHtmlElement = document.getElementById("message");
+const remainingTries = document.getElementById("remaining-tries");
 
 const resetButton = document.getElementById("reset-button");
 resetButton.onclick = () => initGuessTheNumber();
@@ -31,17 +32,27 @@ function handleSubmit(e) {
   if (checkValue(inputValue) === false) return;
 
   steps++;
+  remainingTries.innerText = "Remaining tries : " + 5 - steps;
 
   if (!alreadyTriedHeaderHtmlElement.innerText)
     alreadyTriedHeaderHtmlElement.innerText = "Already tried :";
 
   const li = document.createElement("li");
-  li.innerText = inputValue;
+  li.classList.add("w-100", "list-group-item", "text-white", "bg-dark");
+
+  if (inputValue > numberToFind) {
+    li.innerText = inputValue + " (-)";
+  } else if (inputValue < numberToFind) {
+    li.innerText = inputValue + " (+)";
+  } else {
+    li.innerText = inputValue + " (=)";
+  }
   alreadyTriedHtmlElement.appendChild(li);
 
   if (steps > 4 && !won) {
     messageHtmlElement.innerText =
       "You lost ! The number was : " + numberToFind;
+    messageHtmlElement.classList.add("text-danger");
     numberInputHtmlElement.setAttribute("disabled", "");
   }
 }
@@ -53,6 +64,7 @@ function checkValue(val) {
   } else if (val > 50 || val < 0) {
     messageHtmlElement.innerText =
       "The number must be between 0 and 50 (included).";
+    messageHtmlElement.classList.add("text-success");
     return false;
   } else if (val === numberToFind) {
     messageHtmlElement.innerText = "You won !";
@@ -65,12 +77,15 @@ function checkValue(val) {
 function initGuessTheNumber() {
   steps = 0;
   won = false;
-  setNumberToFind(getRandomNumInRange(0, 50));
+  setNumberToFind(getRandomNumInRange());
 
+  messageHtmlElement.classList.remove("text-success", "text-danger");
   numberInputHtmlElement.removeAttribute("disabled");
+
   messageHtmlElement.innerHTML = "";
   alreadyTriedHeaderHtmlElement.innerHTML = "";
   alreadyTriedHtmlElement.innerHTML = "";
+  remainingTries.innerHTML = "Remaining tries : 5";
 }
 
 function setNumberToFind(num) {

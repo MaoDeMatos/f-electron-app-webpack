@@ -27,12 +27,13 @@ initGuessTheNumber();
 function handleSubmit(e) {
   e.preventDefault();
   const inputValue = parseInt(e.target[0].value);
+  console.log(inputValue);
   e.target[0].value = null;
 
   if (checkValue(inputValue) === false) return;
 
   steps++;
-  remainingTries.innerText = "Remaining tries : " + 5 - steps;
+  remainingTries.innerHTML = "Remaining tries : " + (5 - steps);
 
   if (!alreadyTriedHeaderHtmlElement.innerText)
     alreadyTriedHeaderHtmlElement.innerText = "Already tried :";
@@ -64,10 +65,10 @@ function checkValue(val) {
   } else if (val > 50 || val < 0) {
     messageHtmlElement.innerText =
       "The number must be between 0 and 50 (included).";
-    messageHtmlElement.classList.add("text-success");
     return false;
   } else if (val === numberToFind) {
     messageHtmlElement.innerText = "You won !";
+    messageHtmlElement.classList.add("text-success");
     numberInputHtmlElement.setAttribute("disabled", "");
     won = true;
   } else if (val > numberToFind) messageHtmlElement.innerText = "It's less !";

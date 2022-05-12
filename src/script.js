@@ -8,6 +8,7 @@ window.onload = () => {
   );
   const alreadyTriedHtmlElement = document.getElementById("already-tried");
   const messageHtmlElement = document.getElementById("message");
+  const tryRemaining = document.getElementById("try-remaining");
 
   const resetButton = document.getElementById("reset-button");
   resetButton.onclick = () => initGuessTheNumber();
@@ -28,12 +29,24 @@ window.onload = () => {
     else if (inputValue < numberToFind) yourInputWasSmaller();
 
     steps++;
+    const remain = 5 - steps;
+    tryRemaining.innerHTML = "Try Remaining : " + remain;
 
     if (!alreadyTriedHeaderHtmlElement.innerHTML)
       alreadyTriedHeaderHtmlElement.innerHTML = "Already tried :";
 
     const li = document.createElement("li");
-    li.innerHTML = inputValue;
+    li.classList.add("w-100")
+    li.classList.add("list-group-item")
+    li.classList.add("text-white")
+    li.classList.add("bg-dark")
+    if (inputValue > numberToFind) {
+      li.innerHTML = inputValue + " -";
+    } else if (inputValue < numberToFind) {
+      li.innerHTML = inputValue + " +";
+    } else {
+      li.innerHTML = inputValue + " =";
+    }
     alreadyTriedHtmlElement.appendChild(li);
 
     if (steps > 4 && !won) {
@@ -42,6 +55,7 @@ window.onload = () => {
   };
 
   function youWon() {
+    messageHtmlElement.classList.add("text-success");
     messageHtmlElement.innerHTML = "You won !";
     numberInputHtmlElement.setAttribute("disabled", "");
   }
@@ -55,6 +69,7 @@ window.onload = () => {
   }
 
   function youLost() {
+    messageHtmlElement.classList.add("text-danger");
     messageHtmlElement.innerHTML =
       "You lost ! The number was : " + numberToFind;
     numberInputHtmlElement.setAttribute("disabled", "");
@@ -64,10 +79,13 @@ window.onload = () => {
     steps = 0;
     numberToFind = getRandomNumInRange(0, 50);
 
+    messageHtmlElement.classList.remove("text-success");
+    messageHtmlElement.classList.remove("text-danger");
     numberInputHtmlElement.removeAttribute("disabled");
     messageHtmlElement.innerHTML = "";
     alreadyTriedHeaderHtmlElement.innerHTML = "";
     alreadyTriedHtmlElement.innerHTML = "";
+    tryRemaining.innerHTML = "Try Remaining : 5";
   }
 
   initGuessTheNumber();

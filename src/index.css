@@ -4,9 +4,16 @@ body {
     Arial, sans-serif;
   height: 100vh;
   margin: 0;
+  background-image: url("asset/background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 #page {
   height: calc(100vh - 2rem);
   padding: 1rem;
+}
+
+.list-group-item {
+  border-color: white;
 }

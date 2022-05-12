@@ -36,10 +36,8 @@ window.onload = () => {
       alreadyTriedHeaderHtmlElement.innerHTML = "Already tried :";
 
     const li = document.createElement("li");
-    li.classList.add("w-100")
-    li.classList.add("list-group-item")
-    li.classList.add("text-white")
-    li.classList.add("bg-dark")
+    li.classList.add("w-100", "list-group-item", "text-white", "bg-dark");
+
     if (inputValue > numberToFind) {
       li.innerHTML = inputValue + " -";
     } else if (inputValue < numberToFind) {
@@ -79,9 +77,9 @@ window.onload = () => {
     steps = 0;
     numberToFind = getRandomNumInRange(0, 50);
 
-    messageHtmlElement.classList.remove("text-success");
-    messageHtmlElement.classList.remove("text-danger");
+    messageHtmlElement.classList.remove("text-success", "text-danger");
     numberInputHtmlElement.removeAttribute("disabled");
+
     messageHtmlElement.innerHTML = "";
     alreadyTriedHeaderHtmlElement.innerHTML = "";
     alreadyTriedHtmlElement.innerHTML = "";

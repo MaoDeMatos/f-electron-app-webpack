@@ -9,11 +9,6 @@ body {
   background-size: cover;
 }
 
-#page {
-  height: calc(100vh - 2rem);
-  padding: 1rem;
-}
-
 .list-group-item {
   border-color: white;
 }

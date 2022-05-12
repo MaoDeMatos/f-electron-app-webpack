@@ -27,11 +27,11 @@ initGuessTheNumber();
 function handleSubmit(e) {
   e.preventDefault();
   const inputValue = parseInt(e.target[0].value);
-  console.log(inputValue);
   e.target[0].value = null;
 
   if (checkValue(inputValue) === false) return;
 
+  // This executes only if inputValue is valid
   steps++;
   remainingTries.innerHTML = "Remaining tries : " + (5 - steps);
 
@@ -41,15 +41,15 @@ function handleSubmit(e) {
   const li = document.createElement("li");
   li.classList.add("w-100", "list-group-item", "text-white", "bg-dark");
 
-  if (inputValue > numberToFind) {
-    li.innerText = inputValue + " (-)";
-  } else if (inputValue < numberToFind) {
-    li.innerText = inputValue + " (+)";
-  } else {
-    li.innerText = inputValue + " (=)";
-  }
+  li.innerText =
+    inputValue > numberToFind
+      ? inputValue + " (-)"
+      : inputValue < numberToFind
+      ? inputValue + " (+)"
+      : inputValue + " (=)";
   alreadyTriedHtmlElement.appendChild(li);
 
+  // You lost
   if (steps > 4 && !won) {
     messageHtmlElement.innerText =
       "You lost ! The number was : " + numberToFind;
@@ -58,15 +58,22 @@ function handleSubmit(e) {
   }
 }
 
+/**
+ * Checks if given value is valid
+ * @param {number} val Value to check
+ */
 function checkValue(val) {
-  if (!val) {
+  if (!val && val !== 0) {
+    // Invalid data
     messageHtmlElement.innerText = "";
     return false;
   } else if (val > 50 || val < 0) {
+    // Value not in range
     messageHtmlElement.innerText =
       "The number must be between 0 and 50 (included).";
     return false;
   } else if (val === numberToFind) {
+    // You won
     messageHtmlElement.innerText = "You won !";
     messageHtmlElement.classList.add("text-success");
     numberInputHtmlElement.setAttribute("disabled", "");
@@ -75,6 +82,9 @@ function checkValue(val) {
   else if (val < numberToFind) messageHtmlElement.innerText = "It's more !";
 }
 
+/**
+ * Resets the app and regenerates a number to play again
+ */
 function initGuessTheNumber() {
   steps = 0;
   won = false;
@@ -98,7 +108,7 @@ function getNumberToFind() {
 }
 
 /**
- * Generates a random number in range
+ * Generates a random number in given range
  * @param {number} min Min value
  * @param {number} max Max value
  * @returns

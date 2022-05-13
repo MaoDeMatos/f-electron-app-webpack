@@ -14,6 +14,7 @@ const createWindow = () => {
     height: 720,
     // With this, you need to press "alt" to see the toolbar
     autoHideMenuBar: true,
+    icon:__dirname+"/asset/question-mark.png"
   });
 
   // and load the index.html of the app.

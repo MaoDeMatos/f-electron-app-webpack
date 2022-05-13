@@ -9,6 +9,7 @@ const alreadyTriedHeaderHtmlElement = document.getElementById(
 const alreadyTriedHtmlElement = document.getElementById("already-tried");
 const messageHtmlElement = document.getElementById("message");
 const remainingTries = document.getElementById("remaining-tries");
+const submitButton = document.getElementById("submit-button");
 
 const resetButton = document.getElementById("reset-button");
 resetButton.onclick = () => initGuessTheNumber();
@@ -33,7 +34,7 @@ function handleSubmit(e) {
 
   // This executes only if inputValue is valid
   steps++;
-  remainingTries.innerHTML = "Remaining tries : " + (5 - steps);
+  remainingTries.innerHTML = 5 - steps;
 
   if (!alreadyTriedHeaderHtmlElement.innerText)
     alreadyTriedHeaderHtmlElement.innerText = "Already tried :";
@@ -55,6 +56,7 @@ function handleSubmit(e) {
       "You lost ! The number was : " + numberToFind;
     messageHtmlElement.classList.add("text-danger");
     numberInputHtmlElement.setAttribute("disabled", "");
+    submitButton.setAttribute("disabled", "");
   }
 }
 
@@ -65,7 +67,6 @@ function handleSubmit(e) {
 function checkValue(val) {
   if (!val && val !== 0) {
     // Invalid data
-    messageHtmlElement.innerText = "";
     return false;
   } else if (val > 50 || val < 0) {
     // Value not in range
@@ -77,6 +78,7 @@ function checkValue(val) {
     messageHtmlElement.innerText = "You won !";
     messageHtmlElement.classList.add("text-success");
     numberInputHtmlElement.setAttribute("disabled", "");
+    submitButton.setAttribute("disabled", "");
     won = true;
   } else if (val > numberToFind) messageHtmlElement.innerText = "It's less !";
   else if (val < numberToFind) messageHtmlElement.innerText = "It's more !";
@@ -88,15 +90,16 @@ function checkValue(val) {
 function initGuessTheNumber() {
   steps = 0;
   won = false;
-  setNumberToFind(getRandomNumInRange());
+  numberToFind = getRandomNumInRange();
 
   messageHtmlElement.classList.remove("text-success", "text-danger");
   numberInputHtmlElement.removeAttribute("disabled");
+  submitButton.removeAttribute("disabled");
 
   messageHtmlElement.innerHTML = "";
   alreadyTriedHeaderHtmlElement.innerHTML = "";
   alreadyTriedHtmlElement.innerHTML = "";
-  remainingTries.innerHTML = "Remaining tries : 5";
+  remainingTries.innerHTML = 5;
 }
 
 function setNumberToFind(num) {
@@ -117,8 +120,8 @@ function getRandomNumInRange(min = 0, max = 50) {
   return Math.ceil(Math.random() * (max - min) + min);
 }
 
-// "export function;" is from ES6 specification,
-// we need to use Node CommonJS module system :
+// "export function myFunction;" is from ES6 specification,
+// we need to use Node's CommonJS module system :
 if (typeof exports !== "undefined") {
   module.exports = {
     setNumberToFind,

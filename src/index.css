@@ -7,6 +7,7 @@ body {
   background-image: url("asset/background.jpg");
   background-repeat: no-repeat;
   background-size: cover;
+  text-align: center;
 }
 
 .list-group-item {

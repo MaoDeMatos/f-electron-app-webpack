@@ -56,12 +56,6 @@ describe("Message paragraph", () => {
       expect(script.messageHtmlElement.innerText).toContain(expected);
     }
   );
-
-  test("message should be empty if no value given", () => {
-    script.setNumberToFind(25);
-    script.checkValue();
-    expect(script.messageHtmlElement.innerText).toBe("");
-  });
 });
 
 describe("Generating numbers", () => {
